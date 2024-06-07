@@ -405,11 +405,7 @@ describe('plugin:leetcode', function() {
     it('should ok', function(done) {
       nock('https://leetcode.com')
         .post('/problems/find-the-difference/interpret_solution/')
-        .reply(200, '{"interpret_expected_id": "id1", "interpret_id": "id2"}');
-
-      nock('https://leetcode.com')
-        .get('/submissions/detail/id1/check/')
-        .reply(200, '{"state": "SUCCESS", "run_success": true, "status_msg": "Accepted", "submission_id": "interpret_expected_id1"}');
+        .reply(200, '{"interpret_id": "id2"}');
 
       nock('https://leetcode.com')
         .get('/submissions/detail/id2/check/')
@@ -419,8 +415,6 @@ describe('plugin:leetcode', function() {
         assert.equal(e, null);
         assert.equal(results[0].id, 'id2');
         assert.equal(results[0].ok, false);
-        assert.equal(results[1].id, 'id1');
-        assert.equal(results[1].ok, true);
         done();
       });
     });
